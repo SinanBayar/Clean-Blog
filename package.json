@@ -1,0 +1,30 @@
+{
+  "name": "clean-blog",
+  "version": "1.0.0",
+  "description": "Patika NodeJS Task",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SinanBayar/Clean-Blog.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "Sinan Bayar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SinanBayar/Clean-Blog/issues"
+  },
+  "homepage": "https://github.com/SinanBayar/Clean-Blog#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
