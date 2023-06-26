@@ -5,7 +5,7 @@
     <%- include("partials/_navigation") -%>
 
       <!-- Page Header -->
-      <header class="masthead" style="background-image: url('img/about-bg.jpg')">
+      <header class="masthead" style="background-image: url('/img/home-bg.jpg')">
         <div class="overlay"></div>
         <div class="container">
           <div class="row">
@@ -25,22 +25,26 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             <% for (let i=0 ; i < posts.length ; i++) { %>
               <div class="post-preview">
-                <h2 class="post-title">
-                  <a href="/post/<%= posts[i]._id %>">
+                <a href="/post/<%= posts[i]._id %>">
+                  <h2 class="post-title">
                     <%= posts[i].title %>
-                  </a> 
-                </h2>
+                  </h2>
+                  <h3 class="post-subtitle">
+                    <%= posts[i].detail %>
+                  </h3>
+                </a>
                 <p class="post-meta">Posted by
-                  <%= posts[i].detail %>
+                  <a href="#">Start Bootstrap</a>
+                  <%= posts[i].dateCreated %>
                 </p>
               </div>
-              <% } %>
+              <hr>
+            <% } %>
                 <hr>
-                <hr>
-                <!-- Pager -->
-                <div class="clearfix">
-                  <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-                </div>
+              <!-- Pager -->
+              <div class="clearfix">
+                <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+              </div>
           </div>
         </div>
       </div>

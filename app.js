@@ -1,50 +1,36 @@
 const express = require('express'); // express modülü kullanıyoruz.
-const app = express();
-const port = 4000;
-// const path = require("path");  // core modül kullanmak istersek.
+const app = express(); // express'i app değişkeni ile kullanıyoruz.
+const port = process.env.PORT || 4000; // Port değişkeni local için 4000, sunucuda PORT değişkenşne eşit.
 const mongoose = require('mongoose'); // MongoDB modülü kullanıyoruz.
-const Post = require('./models/Post'); // Post modülü için erişim.
+const methodOverride = require('method-override'); // Web'de put ve delete requestleri kullanabilmek için post requesti dönüştüren modül.
+const pageControllers = require('./controllers/pageControllers.js');
+const postControllers = require('./controllers/postControllers.js');
 
-mongoose.connect('mongodb://localhost:27017/clean-blog-db'); // MongoDB database için erişim.
+mongoose.connect('mongodb+srv://sinanbayar:rnApJdSSi1rHZgyi@cleanblog-cluster.vvjytlk.mongodb.net/?retryWrites=true&w=majority'); // MongoDB bulut database için erişim.
 
 app.listen(port, () => {
   console.log(`Sunucu ${port} portunda başlatıldı...`);
 });
 
-const blog = {
-  id: 1,
-  title: 'Blog title',
-  description: 'Blog description',
-};
-
 // MIDDLEWARES
 app.use(express.static('public')); // Statik dosyalarımızı public klasörümüz üzerinden çalıştırıyoruz.
 app.use(express.urlencoded({ extended: true })); // Body ile saklanan verinin url'sini çevirir.
 app.use(express.json()); // Body ile saklanan veriyi json formatına çevirir.
+app.use(methodOverride('_method', { // Web'de put ve delete requestleri kullanabilmek için post requesti dönüştüren middleware fonksiyonu.
+    methods: ['GET', 'POST'],
+  })
+);
 
 // TEMPLATE ENGINE
 app.set('view engine', 'ejs'); // Uygulamamızda ejs modülünü kullanıyoruz.
 
 // ROUTES
-app.get('/', async (req, res) => {
-  const posts = await Post.find({}); // Databaseden Post modülüne göre verileri bulup anasayfada render ediyoruz.
-  res.render('index', { posts });
-});
+app.get('/', postControllers.getAllPosts); // Anasayfa.
+app.get('/post/:id', postControllers.getPost); // Seçilen id'li postun sayfası.
+app.post('/post', postControllers.createPost); // Post oluşturma.
+app.put('/post/:id', postControllers.updatePost); // Oluşturulmuş postu değiştirme.
+app.delete('/post/:id', postControllers.deletePost); // Oluşturulmuş postu silme.
 
-app.get('/about', (req, res) => {
-  res.render('about');
-});
-
-app.get('/add_post', (req, res) => {
-  res.render('add_post');
-});
-
-app.post('/post', async (req, res) => {
-  await Post.create(req.body); // Post modülünden faydalanılarak girilen data mongoDB veritabanına gönderildi.
-  res.redirect('/'); // Sonrasında anasayfaya dönüldü.(render değil redirect!)
-});
-
-app.get('/post/:id', async (req, res) => {
-  const post = await Post.findById(req.params.id); // Post modülündeki id bilgisinden faydalanılarak mongoDB veritabanından her bir post id'sine göre değişkene atanır.
-  res.render('post', { post }); 
-});
+app.get('/about', pageControllers.getAboutPage); // About sayfası.
+app.get('/add_post', pageControllers.getAdd_PostPage); // Post oluşturma sayfası.
+app.get('/post/edit/:id', pageControllers.getEditPage); // Post değiştirme sayfası.

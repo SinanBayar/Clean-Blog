@@ -5,7 +5,7 @@
     <%- include("partials/_navigation") -%>
 
       <!-- Page Header -->
-      <header class="masthead" style="background-image: url('img/post-bg.jpg')">
+      <header class="masthead" style="background-image: url('/img/post-bg.jpg')">
         <div class="overlay"></div>
         <div class="container">
           <div class="row">
@@ -19,7 +19,12 @@
                 </h2>
                 <span class="meta">Posted by
                   <a href="#">Start Bootstrap</a>
-                  <%= post.dateCreated %></span>
+                  <%= post.dateCreated %>
+                </span>
+                <div class="pt-5">
+                  <a href="/post/edit/<%= post._id %>" class="btn btn-success">Update</a>
+                  <a href="/post/<%= post._id %>?_method=DELETE" class="btn btn-danger" onclick="return confirm('ARE YOU SURE?')">Delete</a>
+                </div>
               </div>
             </div>
           </div>

@@ -5,7 +5,7 @@
     <%- include("partials/_navigation") -%>
 
       <!-- Page Header -->
-      <header class="masthead" style="background-image: url('img/post-bg.jpg')">
+      <header class="masthead" style="background-image: url('/img/post-sample-image.jpg')">
         <div class="overlay"></div>
         <div class="container">
           <div class="row">
@@ -23,11 +23,11 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
-            <form novalidate method="POST" action="/post">
+            <form novalidate method="POST" action="/post/<%= post._id %>?_method=PUT">
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>Post Title</label>
-                  <input name="title" type="text" class="form-control" placeholder="Post Title" id="title" required
+                  <input name="title" type="text" class="form-control" placeholder="Post Title" id="title" required value="<%= post.title %>"
                     data-validation-required-message="Please enter your name.">
                   <p class="help-block text-danger"></p>
                 </div>
@@ -35,13 +35,13 @@
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>Post Detail</label>
-                  <textarea name="detail" rows="5" class="form-control" placeholder="Post Detail" id="detail" required
-                    data-validation-required-message="Please enter a message."></textarea>
+                  <textarea name="detail" rows="5" class="form-control" placeholder="Post Detail" id="detail" required 
+                    data-validation-required-message="Please enter a message."><%= post.detail %></textarea>
                   <p class="help-block text-danger"></p>
                 </div>
                 <br>
                 <div id="success"></div>
-                <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton">Update</button>
             </form>
           </div>
         </div>
